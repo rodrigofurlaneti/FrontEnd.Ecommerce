@@ -31,10 +31,12 @@
                         </li>
                     </ul>
                     <form class="d-flex" role="login">
-                        <button class="btn btn-outline-success" type="button" data-bs-toggle="modal"
+                        <button id="btnLogin" name="btnLogin" class="btn btn-outline-success" type="button"
+                                data-bs-toggle="modal"
                                 data-bs-target="#modalLogin">
                             olá, faça seu login
                         </button>
+                        <span id="userGreeting" class="ms-2" style="display: none;">Olá, <span id="userName"></span></span>
                     </form>
                 </div>
             </div>
@@ -42,8 +44,12 @@
     </header>
 
     <div class="text-center my-3">
-        <button id="btnMobile" name="btnMobile" class="btn btn-primary">Celular</button>
-        <button id="btnDesktop" name="btnDesktop" class="btn btn-secondary">Computador</button>
+        <button id="btnMobile" name="btnMobile" class="btn btn-default btn-sm">
+            <img id="icoMobile" name="icoMobile" src="assets/icon/list_mobile.png" style="height:18px;">
+        </button>
+        <button id="btnDesktop" name="btnDesktop" class="btn btn-default btn-sm">
+            <img id="icoDesktop" name="icoDesktop" src="assets/icon/grid_desktop.png" style="height:18px;">
+        </button>
     </div>
 
     <div id="layout-mobile" name="layout-mobile" class="table-responsive" style="display: none;">
@@ -53,8 +59,8 @@
         </table>
     </div>
 
-    <div id="layout-desktop" name="layout-desktop" class="container-fluid">
-        <div class="row" id="product-table-body-desktop">
+    <div id="layout-desktop" name="layout-desktop" class="container">
+        <div class="row justify-content-center" id="product-table-body-desktop">
         </div>
     </div>
 
@@ -158,20 +164,20 @@
                     var tableBodyDesktop = $('#product-table-body-desktop');
                     data.forEach(function (product) {
                         var rowMobile = $('<tr></tr>');
-                        var colDesktop = $('<div class="col-md-3 mb-3"></div>');
+                        var colDesktop = $('<div class="col-md-4 mb-3"></div>'); // Alterado para col-md-4
 
                         var productHtml = `
                                     <div class="card" style="width: 18rem;">
                                         <div class="d-flex justify-content-center">
-                                            <img id="productPicture" name="productPicture" class="imgDefault" src="img/${product.picture}" class="card-img-top" alt="...">
+                                            <img id="productPicture" name="productPicture" class="imgDefault" src="assets/img/${product.picture}" class="card-img-top" alt="...">
                                         </div>
                                         <div class="card-body">
-                                            <h6 class="card-title">${product.name}</h6>
-                                            <p id="productDetails" name="productDetails" class="card-text text-justify">${product.details}</p>
-                                            <p class="text-center">Valor de R$ <s>${product.valueOf}</s></p>
-                                            <p class="text-center">por R$ <span class="badge text-bg-success">${product.valueFor}</span></p>
-                                            <p class="text-center">Desconto de <span class="badge text-bg-danger">${product.discount}%</span></p>
-                                            <p class="text-center">Quantidade disponível: ${product.amount}</p>
+                                            <h6 class="card-title text-center">${product.name}</h6>
+                                            <p id="productDetails" name="productDetails" class="card-text text-justify text-details">${product.details}</p>
+                                            <p class="text-center text-details">Valor de  <s>R$${product.valueOf}</s></p>
+                                            <p class="text-center">por <span class="badge text-bg-success">R$${product.valueFor}</span></p>
+                                            <p class="text-center"><span class="badge text-bg-danger">Desconto de ${product.discount}%</span></p>
+                                            <p class="text-center text-amount">Quantidade disponível: ${product.amount}</p>
                                             <div class="d-flex justify-content-center">
                                                 <a href="#" class="btn btn-primary btn-sm" id="adicionarCarrinho" name="adicionarCarrinho">Adicionar no carrinho</a>
                                             </div>
@@ -216,8 +222,17 @@
                         console.log('Sucesso:', data);
                         if (data.status) {
                             // Salva o username e status no sessionStorage
+                            sessionStorage.setItem('id', data.id);
+                            sessionStorage.setItem('name', data.name);
                             sessionStorage.setItem('username', data.username);
                             sessionStorage.setItem('status', data.status);
+
+                            // Oculta o botão de login
+                            $('#btnLogin').hide();
+
+                            // Exibe a saudação
+                            $('#userName').text(data.name);
+                            $('#userGreeting').show();
 
                             alert('Autenticação realizada com sucesso!');
                             // Fechar o modal de autenticação

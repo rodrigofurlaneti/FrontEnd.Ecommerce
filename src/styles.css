@@ -10,8 +10,29 @@
     text-align: center;
 }
 
+.text-details {
+    padding-top: 20px;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.text-amount {
+    font-size: 12px;
+    word-break: break-word;
+}
+
 .imgDefault {
     height: 175px;
     aspect-ratio: auto 175 / 175;
     width: 175px;
+}
+
+.btn-custom {
+    padding: 1px 15px 3px 2px;
+    border-radius: 50px;
+}
+
+.btn-icon {
+    padding: 8px;
+    background: #ffffff;
 }
