@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título da Página</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"> <!-- Link para o arquivo de CSS -->
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="cadastro.html">Cadastro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="contato.html">Contato</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="produto.html">Produto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="mb-4 text-center">Adicionar novo produto</h1>
+                <form id="productForm" name="productForm">
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            <label for="name" class="form-label">Nome do produto</label>
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Nome do produto" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="amount" class="form-label">Quantidade</label>
+                            <input type="text" class="form-control form-control-sm" id="amount" name="amount" placeholder="Quantidade" maxlength="3" minlength="3" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="details" class="form-label">Foto</label>
+                            <input type="text" class="form-control form-control-sm" id="details" name="details" placeholder="Detalhes" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="picture" class="form-label">Foto</label>
+                            <input type="text" class="form-control form-control-sm" id="picture" name="picture" placeholder="Foto" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="valueOf" class="form-label">Valor de</label>
+                            <input type="text" class="form-control form-control-sm" id="valueOf" name="valueOf" placeholder="Valor de" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="valueFor" class="form-label">Valor por</label>
+                            <input type="text" class="form-control form-control-sm" id="valueFor" name="valueFor" placeholder="Valor por" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="discount" class="form-label">Desconto</label>
+                            <input type="text" class="form-control form-control-sm" id="discount" name="discount" placeholder="Desconto" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="productStatus" class="form-label">Status</label>
+                            <select class="form-select form-select-sm" id="productStatus" name="productStatus" aria-label="Status do produto">
+                                <option value="1" selected>Ativo</option>
+                                <option value="0">Desativado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <button type="submit" id="btnEnviarProduto" name="btnEnviarProduto" class="btn btn-primary btn-sm">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5">
+        <p>© 2024 Meu Site. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#valueOf').mask('000.000.000.000,00', {reverse: true});
+            $('#valueFor').mask('000.000.000.000,00', {reverse: true});
+            $('#discount').mask('000.000.000.000,00', {reverse: true});
+
+            $('#amount').on('keydown', function(event) {
+                const key = event.key;
+                if (!/^\d$/.test(key) && !['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(key)) {
+                    event.preventDefault();
+                }
+            });
+
+            $('#amount').on('input', function(event) {
+                let amountValue = event.target.value.replace(/\D/g, '');
+                if (amountValue.length > 3) {
+                    amountValue = amountValue.slice(0, 3);
+                }
+                event.target.value = amountValue;
+                if (amountValue.length !== 3) {
+                    event.target.setCustomValidity('A quantidade do produto deve conter exatamente 3 dígitos.');
+                } else {
+                    event.target.setCustomValidity('');
+                }
+            });
+
+            $('#productForm').on('submit', function(event) {
+                    event.preventDefault(); // Impede o envio padrão do formulário
+
+                    var formData = new FormData(this);
+                    var data = {};
+
+                    formData.forEach((value, key) => {
+                        data[key] = value;
+                    });
+
+                    // Convertendo valores decimais para o formato com ponto como separador decimal
+                    data.valueOf = parseFloat(data.valueOf.replace(',', '.'));
+                    data.valueFor = parseFloat(data.valueFor.replace(',', '.'));
+                    data.discount = parseFloat(data.discount.replace(',', '.'));
+
+                    // Log para verificar os dados antes de enviar
+                    console.log('Dados a serem enviados:', data);
+
+                    $.ajax({
+                        url: 'https://localhost:7274/api/Product',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(data),
+                        success: function(response) {
+                            console.log('Sucesso:', response);
+                            alert('Produto adicionado com sucesso!');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Erro:', error);
+                            alert('Erro ao adicionar o produto.');
+                        }
+                    });
+                });
+
+        });
+    </script>
+</body>
+</html>
