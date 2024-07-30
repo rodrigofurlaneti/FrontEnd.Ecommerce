@@ -30,16 +30,212 @@
                             <a class="nav-link" aria-current="page" href="produto.html">Produto</a>
                         </li>
                     </ul>
+                    <form class="d-flex" role="login">
+                        <button class="btn btn-outline-success" type="button" data-bs-toggle="modal"
+                                data-bs-target="#modalLogin">
+                            olá, faça seu login
+                        </button>
+                    </form>
                 </div>
             </div>
         </nav>
     </header>
 
+    <div class="text-center my-3">
+        <button id="btnMobile" name="btnMobile" class="btn btn-primary">Celular</button>
+        <button id="btnDesktop" name="btnDesktop" class="btn btn-secondary">Computador</button>
+    </div>
+
+    <div id="layout-mobile" name="layout-mobile" class="table-responsive" style="display: none;">
+        <table class="table">
+            <tbody id="product-table-body-mobile">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="layout-desktop" name="layout-desktop" class="container-fluid">
+        <div class="row" id="product-table-body-desktop">
+        </div>
+    </div>
+
     <footer class="text-center mt-5">
         <p>© 2024 Meu Site. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Modal Login -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Acesse sua conta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Pra ver seus pedidos e ter uma experiência personalizada, acesse sua conta :)
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalAutenticacao">Entrar</button>
+                    <a href="cadastro.html" class="btn btn-secondary btn-sm">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal Autenticação -->
+    <div class="modal fade" id="modalAutenticacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Acesse sua conta</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mt-12">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <form id="authenticationForm" name="authenticationForm">
+                                    <div class="row mb-12">
+                                        <div class="col-md-12">
+                                            <label for="username" class="form-label text-center">Usuário</label>
+                                            <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Usuário" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-12">
+                                        <div class="col-md-12">
+                                            <label for="password" class="form-label text-center">Senha</label>
+                                            <input type="password" class="form-control form-control-sm" id="password" name="password" placeholder="Senha" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-12">
+                                        <div class="col-md-12">
+                                            <div class="d-flex justify-content-center" style="padding-top:2em;">
+                                                <button type="submit" id="btnAutenticarAcesso" name="btnAutenticarAcesso" class="btn btn-primary btn-sm">Enviar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Função para alternar a visibilidade dos layouts
+            function toggleLayout(layoutToShow) {
+                if (layoutToShow === 'mobile') {
+                    $('#layout-mobile').show();
+                    $('#layout-desktop').hide();
+                } else {
+                    $('#layout-mobile').hide();
+                    $('#layout-desktop').show();
+                }
+            }
+
+            // Mostrar layout desktop por padrão
+            toggleLayout('desktop');
+
+            // Eventos de clique para os botões
+            $('#btnMobile').click(function () {
+                toggleLayout('mobile');
+            });
+
+            $('#btnDesktop').click(function () {
+                toggleLayout('desktop');
+            });
+
+            // Requisição AJAX para buscar os produtos
+            $.ajax({
+                url: 'https://localhost:7274/api/Product',
+                method: 'GET',
+                success: function (data) {
+                    var tableBodyMobile = $('#product-table-body-mobile');
+                    var tableBodyDesktop = $('#product-table-body-desktop');
+                    data.forEach(function (product) {
+                        var rowMobile = $('<tr></tr>');
+                        var colDesktop = $('<div class="col-md-3 mb-3"></div>');
+
+                        var productHtml = `
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="d-flex justify-content-center">
+                                            <img id="productPicture" name="productPicture" class="imgDefault" src="img/${product.picture}" class="card-img-top" alt="...">
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-title">${product.name}</h6>
+                                            <p id="productDetails" name="productDetails" class="card-text text-justify">${product.details}</p>
+                                            <p class="text-center">Valor de R$ <s>${product.valueOf}</s></p>
+                                            <p class="text-center">por R$ <span class="badge text-bg-success">${product.valueFor}</span></p>
+                                            <p class="text-center">Desconto de <span class="badge text-bg-danger">${product.discount}%</span></p>
+                                            <p class="text-center">Quantidade disponível: ${product.amount}</p>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-primary btn-sm" id="adicionarCarrinho" name="adicionarCarrinho">Adicionar no carrinho</a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+                        rowMobile.html(`<td class="d-flex align-items-center justify-content-center">${productHtml}</td>`);
+                        colDesktop.html(productHtml);
+
+                        tableBodyMobile.append(rowMobile);
+                        tableBodyDesktop.append(colDesktop);
+                    });
+                },
+                error: function (error) {
+                    console.error('Erro ao buscar os dados:', error);
+                }
+            });
+
+            // Adiciona o evento de submit ao formulário de autenticação
+            $('#authenticationForm').on('submit', function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+
+                const formData = {
+                    username: $('#username').val(),
+                    password: $('#password').val()
+                };
+
+                fetch('https://localhost:7274/api/Authentication', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                    .then(response => {
+                        if (response.status === 401) {
+                            throw new Error('Unauthorized');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Sucesso:', data);
+                        if (data.status) {
+                            // Salva o username e status no sessionStorage
+                            sessionStorage.setItem('username', data.username);
+                            sessionStorage.setItem('status', data.status);
+
+                            alert('Autenticação realizada com sucesso!');
+                            // Fechar o modal de autenticação
+                            $('#modalAutenticacao').modal('hide');
+                        } else {
+                            alert('Erro ao autenticar o usuário.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        if (error.message === 'Unauthorized') {
+                            alert('Usuário ou senha incorretos.');
+                        } else {
+                            alert('Erro ao autenticar o usuário.');
+                        }
+                    });
+            });
+        });
+    </script>
 </body>
 </html>
