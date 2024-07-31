@@ -36,7 +36,20 @@
                                 data-bs-target="#modalLogin">
                             olá, faça seu login
                         </button>
-                        <span id="userGreeting" class="ms-2" style="display: none;">Olá, <span id="userName"></span></span>
+                        <span id="userGreeting" class="ms-2" style="display: none;">
+                            Olá,
+                            <span id="userName"></span>
+                            <img id="icoVerifiedOk" name="icoVerifiedOk" src="assets/icon/verified_ok.png" style="height:22px;">
+                            <button type="button" class="btn btn-outline-default position-relative">
+                                <img id="icoCartMarket" name="icoCartMarket" class="position-relative" 
+                                     src="assets/icon/cart_market.png" style="height:36px;">
+                                <span id="countProductOrder" name="countProductOrder" 
+                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                  0
+                                  <span class="visually-hidden">unread messages</span>
+                                </span>
+                              </button>
+                        </span>
                     </form>
                 </div>
             </div>
@@ -115,7 +128,9 @@
                                     <div class="row mb-12">
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-center" style="padding-top:2em;">
-                                                <button type="submit" id="btnAutenticarAcesso" name="btnAutenticarAcesso" class="btn btn-primary btn-sm">Enviar</button>
+                                                <button type="submit" id="btnAutenticarAcesso" name="btnAutenticarAcesso" class="btn btn-primary btn-sm">
+                                                    Enviar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -156,44 +171,115 @@
             });
 
             // Requisição AJAX para buscar os produtos
-            $.ajax({
-                url: 'https://localhost:7274/api/Product',
-                method: 'GET',
-                success: function (data) {
-                    var tableBodyMobile = $('#product-table-body-mobile');
-                    var tableBodyDesktop = $('#product-table-body-desktop');
-                    data.forEach(function (product) {
-                        var rowMobile = $('<tr></tr>');
-                        var colDesktop = $('<div class="col-md-4 mb-3"></div>'); // Alterado para col-md-4
+            function fetchProducts() {
+                $.ajax({
+                    url: 'https://localhost:7274/api/Product',
+                    method: 'GET',
+                    success: function (data) {
+                        var tableBodyMobile = $('#product-table-body-mobile');
+                        var tableBodyDesktop = $('#product-table-body-desktop');
+                        data.forEach(function (product) {
+                            var rowMobile = $('<tr></tr>');
+                            var colDesktop = $('<div class="col-md-4 mb-3"></div>'); // Alterado para col-md-4
 
-                        var productHtml = `
-                                    <div class="card" style="width: 18rem;">
+                            var productHtml = `
+                                <div class="card" style="width: 18rem;">
+                                    <div class="d-flex justify-content-center">
+                                        <img id="productPicture" name="productPicture" class="imgDefault" src="assets/img/${product.picture}" class="card-img-top" alt="...">
+                                    </div>
+                                    <div class="card-body">
+                                        <input type="hidden" id="idProduct" name="idProduct" value="${product.id}"/>
+                                        <input type="hidden" id="amount" name="amount" value="1"/>
+                                        <h6 class="card-title text-center">${product.name}</h6>
+                                        <p id="productDetails" name="productDetails" class="card-text text-justify text-details">${product.details}</p>
+                                        <p class="text-center text-details">Valor de  <s>R$${product.valueOf}</s></p>
+                                        <p class="text-center">por <span class="badge text-bg-success">R$${product.valueFor}</span></p>
+                                        <p class="text-center"><span class="badge text-bg-danger">Desconto de ${product.discount}%</span></p>
+                                        <p class="text-center text-amount">Quantidade disponível: ${product.amount}</p>
                                         <div class="d-flex justify-content-center">
-                                            <img id="productPicture" name="productPicture" class="imgDefault" src="assets/img/${product.picture}" class="card-img-top" alt="...">
+                                            <a href="#" class="btn btn-default btn-sm adicionarCarrinho" name="adicionarCarrinho">
+                                                <img id="icoCartPlus" name="icoCartPlus" src="assets/icon/cart_plus.png" style="height:18px;">
+                                                Adicionar no carrinho
+                                            </a>
                                         </div>
-                                        <div class="card-body">
-                                            <h6 class="card-title text-center">${product.name}</h6>
-                                            <p id="productDetails" name="productDetails" class="card-text text-justify text-details">${product.details}</p>
-                                            <p class="text-center text-details">Valor de  <s>R$${product.valueOf}</s></p>
-                                            <p class="text-center">por <span class="badge text-bg-success">R$${product.valueFor}</span></p>
-                                            <p class="text-center"><span class="badge text-bg-danger">Desconto de ${product.discount}%</span></p>
-                                            <p class="text-center text-amount">Quantidade disponível: ${product.amount}</p>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#" class="btn btn-primary btn-sm" id="adicionarCarrinho" name="adicionarCarrinho">Adicionar no carrinho</a>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                                    </div>
+                                </div>`;
 
-                        rowMobile.html(`<td class="d-flex align-items-center justify-content-center">${productHtml}</td>`);
-                        colDesktop.html(productHtml);
+                            rowMobile.html(`<td class="d-flex align-items-center justify-content-center">${productHtml}</td>`);
+                            colDesktop.html(productHtml);
 
-                        tableBodyMobile.append(rowMobile);
-                        tableBodyDesktop.append(colDesktop);
+                            tableBodyMobile.append(rowMobile);
+                            tableBodyDesktop.append(colDesktop);
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Erro ao buscar os dados:', error);
+                    }
+                });
+            }
+
+            // Chamar a função para buscar produtos quando o documento estiver pronto
+            fetchProducts();
+
+            // Função para buscar o pedido por ID e atualizar o countProductOrder
+            function fetchOrderById(orderId) {
+                fetch(`https://localhost:7274/api/Order/${orderId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Detalhes do pedido:', data);
+                        // Atualiza o elemento com o id countProductOrder
+                        $('#countProductOrder').text(data);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar o pedido:', error);
                     });
-                },
-                error: function (error) {
-                    console.error('Erro ao buscar os dados:', error);
+            }
+
+            // Evento de clique para adicionar ao carrinho
+            $(document).on('click', '.adicionarCarrinho', function (event) {
+                event.preventDefault(); // Impede o comportamento padrão do link
+
+                var idProduct = $(this).closest('.card-body').find('input[name="idProduct"]').val();
+                var userId = sessionStorage.getItem('id');
+                var amount = $(this).closest('.card-body').find('input[name="amount"]').val();
+                var orderId = sessionStorage.getItem('orderId') ? sessionStorage.getItem('orderId') : 0;
+
+                if (!userId) {
+                    alert('Você precisa estar logado para adicionar produtos ao carrinho.');
+                    return;
                 }
+
+                var orderData = {
+                    userId: userId,
+                    productId: idProduct,
+                    amount: amount,
+                    orderId: orderId 
+                };
+
+                fetch('https://localhost:7274/api/Order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        console.log('Produto adicionado ao carrinho:', data);
+
+                        // Se o idOrder for maior que zero, busca o pedido e atualiza o countProductOrder
+                        if (data.id > 0) {
+                            // Salva o idOrder no sessionStorage
+                            sessionStorage.setItem('orderId', data.id);
+                            alert('Produto adicionado ao carrinho com sucesso!');
+                            fetchOrderById(data.id);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao adicionar produto ao carrinho:', error);
+                        alert('Erro ao adicionar produto ao carrinho.');
+                    });
             });
 
             // Adiciona o evento de submit ao formulário de autenticação
