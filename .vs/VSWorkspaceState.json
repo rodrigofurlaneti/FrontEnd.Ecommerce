@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\assets",
+    "\\src\\assets\\icon"
   ],
-  "SelectedNode": "\\C:\\Users\\adm\\Desktop\\Front",
+  "SelectedNode": "\\src\\assets",
   "PreviewInSolutionExplorer": false
 }

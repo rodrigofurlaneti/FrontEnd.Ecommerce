@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\adm\\Desktop\\Front\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\cadastro.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\cadastro.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\produto.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\produto.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -21,6 +17,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\contato.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\contato.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adm\\Desktop\\Front\\src\\produto.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\produto.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 1768,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,20 +54,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "cadastro.html",
               "DocumentMoniker": "C:\\Users\\adm\\Desktop\\Front\\src\\cadastro.html",
               "RelativeDocumentMoniker": "src\\cadastro.html",
               "ToolTip": "C:\\Users\\adm\\Desktop\\Front\\src\\cadastro.html",
               "RelativeToolTip": "src\\cadastro.html",
-              "ViewState": "AQIAACQAAAAAAAAAAAAAABoBAAAAAAAA",
+              "ViewState": "AQIAAN8AAAAAAAAAAAAUwO4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2024-07-30T16:06:48.87Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "produto.html",
               "DocumentMoniker": "C:\\Users\\adm\\Desktop\\Front\\src\\produto.html",
               "RelativeDocumentMoniker": "src\\produto.html",
@@ -75,44 +75,42 @@
               "RelativeToolTip": "src\\produto.html",
               "ViewState": "AQIAAGAAAAAAAAAAAAAAAF0AAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-07-30T13:02:51.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-30T13:02:51.155Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "styles.css",
               "DocumentMoniker": "C:\\Users\\adm\\Desktop\\Front\\src\\styles.css",
               "RelativeDocumentMoniker": "src\\styles.css",
               "ToolTip": "C:\\Users\\adm\\Desktop\\Front\\src\\styles.css",
               "RelativeToolTip": "src\\styles.css",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACgAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-07-30T12:58:21.565Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "contato.html",
               "DocumentMoniker": "C:\\Users\\adm\\Desktop\\Front\\src\\contato.html",
               "RelativeDocumentMoniker": "src\\contato.html",
               "ToolTip": "C:\\Users\\adm\\Desktop\\Front\\src\\contato.html",
               "RelativeToolTip": "src\\contato.html",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAADgAAAAoAAAA",
+              "ViewState": "AQIAAIEAAAAAAAAAAAAAADgAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2024-07-30T11:26:56.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-30T11:26:56.34Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\adm\\Desktop\\Front\\src\\index.html",
               "RelativeDocumentMoniker": "src\\index.html",
               "ToolTip": "C:\\Users\\adm\\Desktop\\Front\\src\\index.html",
               "RelativeToolTip": "src\\index.html",
-              "ViewState": "AQIAANgAAAAAAAAAAAAiwPQAAAAHAAAA",
+              "ViewState": "AQIAAE8BAAAAAAAAAAAAAF4BAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2024-07-30T11:26:45.921Z",
               "EditorCaption": ""

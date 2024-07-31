@@ -36,3 +36,9 @@
     padding: 8px;
     background: #ffffff;
 }
+
+#countProductOrder {
+    top: 5px !important; /* Ajuste conforme necessário */
+    left: 35px !important; /* Ajuste conforme necessário */
+}
+
