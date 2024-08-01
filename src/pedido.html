@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <!-- Navbar content -->
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Detalhes do Pedido</h1>
+        <div id="order-products" class="row justify-content-center">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Imagem</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Quantidade</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="product-list">
+                    <!-- Conteúdo será adicionado aqui pelo JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <h3 class="text-end">Total: R$ <span id="total-value">0.00</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5">
+        <p>© 2024 Meu Site. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchOrderProducts(orderId) {
+                console.log(`Buscando produtos do pedido com ID: ${orderId}`);
+
+                $.ajax({
+                    url: 'https://localhost:7274/api/OrderProduct',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ IdOrder: orderId }),
+                    success: function (data) {
+                        console.log('Resposta recebida da API:', data);
+
+                        // Parse the JSON response
+                        var products = JSON.parse(data);
+                        console.log('Parsed Products:', products);
+
+                        var productList = $('#product-list');
+                        var totalValue = 0;
+
+                        productList.empty();
+
+                        if (!products || !Array.isArray(products)) {
+                            Swal.fire({
+                                title: "Erro",
+                                text: "Dados inválidos recebidos do servidor!",
+                                icon: "error"
+                            });
+                            return;
+                        }
+
+                        products.forEach(function (product) {
+                            console.log('Product:', product);
+
+                            var productTotal = product.amount * product.valueFor;
+                            totalValue += productTotal;
+
+                            var productHtml = `
+                                    <tr>
+                                        <td class="text-center"><img src="assets/img/${product.picture}" width="50px" alt="Imagem do produto"></td>
+                                        <td class="text-center">${product.name}</td>
+                                        <td class="text-center">${product.amount}</td>
+                                        <td class="text-center">R$${product.valueFor}</td>
+                                        <td class="text-center">R$${productTotal.toFixed(2)}</td>
+                                    </tr>`;
+                            productList.append(productHtml);
+                        });
+
+                        $('#total-value').text(totalValue.toFixed(2));
+                    },
+                    error: function (error) {
+                        console.error('Erro ao buscar os produtos do pedido:', error);
+                        Swal.fire({
+                            title: "Erro",
+                            text: "Erro ao buscar os produtos do pedido!",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+
+            var orderId = sessionStorage.getItem('orderId');
+            if (orderId) {
+                fetchOrderProducts(orderId);
+            } else {
+                Swal.fire({
+                    title: "Erro",
+                    text: "ID do pedido não encontrado!",
+                    icon: "error"
+                });
+            }
+        });
+    </script>
+</body>
+</html>

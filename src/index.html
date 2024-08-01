@@ -23,13 +23,16 @@
                             <a class="nav-link active" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="cadastro.html">Cadastro</a>
+                            <a id="cadastro" name="cadastro" class="nav-link" aria-current="page" href="cadastro.html">Cadastro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="contato.html">Contato</a>
+                            <a id="contato" name="contato" class="nav-link" aria-current="page" href="contato.html">Contato</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="produto.html">Produto</a>
+                            <a id="pedido" name="pedido" class="nav-link" aria-current="page" href="pedido.html">Pedido</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="produto" name="produto" class="nav-link" aria-current="page" href="produto.html">Produto</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="login">
@@ -149,6 +152,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+
+            $('#pedido').click(function (event) {
+                event.preventDefault();
+                var orderId = sessionStorage.getItem('orderId');
+                if (orderId) {
+                    window.location.href = 'pedido.html';
+                } else {
+                    Swal.fire({
+                        title: "Erro",
+                        text: "ID do pedido não encontrado!",
+                        icon: "error"
+                    });
+                }
+            });
+
             // Função para alternar a visibilidade dos layouts
             function toggleLayout(layoutToShow) {
                 if (layoutToShow === 'mobile') {
