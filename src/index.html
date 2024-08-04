@@ -159,14 +159,31 @@
 
                 // Identificando o sistema operacional
                 if (navigator.userAgent.indexOf("Windows NT 10.0") != -1) userAgent = "Windows 10";
+                if (navigator.userAgent.indexOf("Windows NT 6.3") != -1) userAgent = "Windows 8.1";
                 if (navigator.userAgent.indexOf("Windows NT 6.2") != -1) userAgent = "Windows 8";
                 if (navigator.userAgent.indexOf("Windows NT 6.1") != -1) userAgent = "Windows 7";
                 if (navigator.userAgent.indexOf("Windows NT 6.0") != -1) userAgent = "Windows Vista";
+                if (navigator.userAgent.indexOf("Windows NT 5.2") != -1) userAgent = "Windows Server 2003/XP x64";
                 if (navigator.userAgent.indexOf("Windows NT 5.1") != -1) userAgent = "Windows XP";
+                if (navigator.userAgent.indexOf("Windows XP") != -1) userAgent = "Windows XP";
                 if (navigator.userAgent.indexOf("Windows NT 5.0") != -1) userAgent = "Windows 2000";
+                if (navigator.userAgent.indexOf("Windows ME") != -1) userAgent = "Windows ME";
+                if (navigator.userAgent.indexOf("win98") != -1) userAgent = "Windows 98";
+                if (navigator.userAgent.indexOf("win95") != -1) userAgent = "Windows 95";
+                if (navigator.userAgent.indexOf("win16") != -1) userAgent = "Windows 3.11";
+                if (navigator.userAgent.indexOf("android") != -1) userAgent = "Android";
                 if (navigator.userAgent.indexOf("Mac") != -1) userAgent = "Mac/iOS";
+                if (navigator.userAgent.indexOf("macintosh|mac os x") != -1) userAgent = "Mac OS X";
+                if (navigator.userAgent.indexOf("mac_powerpc") != -1) userAgent = "Mac OS 9";
+                if (navigator.userAgent.indexOf("iphone") != -1) userAgent = "Iphone";
+                if (navigator.userAgent.indexOf("ipad") != -1) userAgent = "Ipad";
+                if (navigator.userAgent.indexOf("ipod") != -1) userAgent = "Ipod";               
                 if (navigator.userAgent.indexOf("X11") != -1) userAgent = "UNIX";
                 if (navigator.userAgent.indexOf("Linux") != -1) userAgent = "Linux";
+                if (navigator.userAgent.indexOf("ubuntu") != -1) userAgent = "Ubuntu";
+                if (navigator.userAgent.indexOf("webos") != -1) userAgent = "Mobile";
+                if (navigator.userAgent.indexOf("blackberry") != -1) userAgent = "Blackberry";
+
 
                 // Obtendo o endereço IP do cliente (usando uma API pública)
                 fetch('https://api.ipify.org?format=json')
