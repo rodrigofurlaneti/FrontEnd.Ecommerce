@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 <body>
     <header>
@@ -36,9 +35,7 @@
                         </li>
                     </ul>
                     <form class="d-flex" role="login">
-                        <button id="btnLogin" name="btnLogin" class="btn btn-outline-success" type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalLogin">
+                        <button id="btnLogin" name="btnLogin" class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#modalLogin">
                             olá, faça seu login
                         </button>
                         <span id="userGreeting" class="ms-2" style="display: none;">
@@ -46,13 +43,8 @@
                             <span id="userName"></span>
                             <img id="icoVerifiedOk" name="icoVerifiedOk" src="assets/icon/verified_ok.png" style="height:22px;">
                             <button type="button" class="btn btn-outline-default position-relative">
-                                <img id="icoCartMarket" name="icoCartMarket" class="position-relative"
-                                     src="assets/icon/cart_market.png" style="height:36px;">
-                                <span id="countProductOrder" name="countProductOrder"
-                                      class="position-absolute badge rounded-pill bg-danger">
-                                    0
-                                    <span class="visually-hidden">unread messages</span>
-                                </span>
+                                <img id="icoCartMarket" name="icoCartMarket" class="position-relative" src="assets/icon/cart_market.png" style="height:36px;">
+                                <span id="countProductOrder" name="countProductOrder" class="position-absolute badge rounded-pill bg-danger">0<span class="visually-hidden">unread messages</span></span>
                             </button>
                         </span>
                     </form>
@@ -133,9 +125,7 @@
                                     <div class="row mb-12">
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-center" style="padding-top:2em;">
-                                                <button type="submit" id="btnAutenticarAcesso" name="btnAutenticarAcesso" class="btn btn-primary btn-sm">
-                                                    Enviar
-                                                </button>
+                                                <button type="submit" id="btnAutenticarAcesso" name="btnAutenticarAcesso" class="btn btn-primary btn-sm">Enviar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -153,8 +143,8 @@
     <script>
         $(document).ready(function () {
 
-             // Captura a localização geográfica e o endereço IP
-             function getAccessData() {
+            // Captura a localização geográfica e o endereço IP
+            function getAccessData() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(sendAccessData, showError);
                 } else {
@@ -165,8 +155,18 @@
             function sendAccessData(position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                const userAgent = navigator.userAgent;
-                const internetProtocol = ''; // Precisa ser preenchido com o endereço IP do cliente
+                let userAgent = navigator.userAgent;
+
+                // Identificando o sistema operacional
+                if (navigator.userAgent.indexOf("Windows NT 10.0") != -1) userAgent = "Windows 10";
+                if (navigator.userAgent.indexOf("Windows NT 6.2") != -1) userAgent = "Windows 8";
+                if (navigator.userAgent.indexOf("Windows NT 6.1") != -1) userAgent = "Windows 7";
+                if (navigator.userAgent.indexOf("Windows NT 6.0") != -1) userAgent = "Windows Vista";
+                if (navigator.userAgent.indexOf("Windows NT 5.1") != -1) userAgent = "Windows XP";
+                if (navigator.userAgent.indexOf("Windows NT 5.0") != -1) userAgent = "Windows 2000";
+                if (navigator.userAgent.indexOf("Mac") != -1) userAgent = "Mac/iOS";
+                if (navigator.userAgent.indexOf("X11") != -1) userAgent = "UNIX";
+                if (navigator.userAgent.indexOf("Linux") != -1) userAgent = "Linux";
 
                 // Obtendo o endereço IP do cliente (usando uma API pública)
                 fetch('https://api.ipify.org?format=json')
@@ -202,7 +202,7 @@
             }
 
             function showError(error) {
-                switch(error.code) {
+                switch (error.code) {
                     case error.PERMISSION_DENIED:
                         console.log("Usuário negou a solicitação de Geolocalização.");
                         break;
@@ -271,27 +271,27 @@
                             var colDesktop = $('<div class="col-md-4 mb-3"></div>'); // Alterado para col-md-4
 
                             var productHtml = `
-                                    <div class="card" style="width: 18rem;">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="d-flex justify-content-center">
+                                        <img id="productPicture" name="productPicture" class="imgDefault" src="assets/img/${product.picture}" class="card-img-top" alt="...">
+                                    </div>
+                                    <div class="card-body">
+                                        <input type="hidden" id="idProduct" name="idProduct" value="${product.id}"/>
+                                        <input type="hidden" id="amount" name="amount" value="1"/>
+                                        <h6 class="card-title text-center">${product.name}</h6>
+                                        <p id="productDetails" name="productDetails" class="card-text text-justify text-details">${product.details}</p>
+                                        <p class="text-center text-details">Valor de  <s>R$${product.valueOf}</s></p>
+                                        <p class="text-center">por <span class="badge text-bg-success">R$${product.valueFor}</span></p>
+                                        <p class="text-center"><span class="badge text-bg-danger">Desconto de ${product.discount}%</span></p>
+                                        <p class="text-center text-amount">Quantidade disponível: ${product.amount}</p>
                                         <div class="d-flex justify-content-center">
-                                            <img id="productPicture" name="productPicture" class="imgDefault" src="assets/img/${product.picture}" class="card-img-top" alt="...">
+                                            <a href="#" class="btn btn-default btn-sm adicionarCarrinho" name="adicionarCarrinho">
+                                                <img id="icoCartPlus" name="icoCartPlus" src="assets/icon/cart_plus.png" style="height:18px;">
+                                                Adicionar no carrinho
+                                            </a>
                                         </div>
-                                        <div class="card-body">
-                                            <input type="hidden" id="idProduct" name="idProduct" value="${product.id}"/>
-                                            <input type="hidden" id="amount" name="amount" value="1"/>
-                                            <h6 class="card-title text-center">${product.name}</h6>
-                                            <p id="productDetails" name="productDetails" class="card-text text-justify text-details">${product.details}</p>
-                                            <p class="text-center text-details">Valor de  <s>R$${product.valueOf}</s></p>
-                                            <p class="text-center">por <span class="badge text-bg-success">R$${product.valueFor}</span></p>
-                                            <p class="text-center"><span class="badge text-bg-danger">Desconto de ${product.discount}%</span></p>
-                                            <p class="text-center text-amount">Quantidade disponível: ${product.amount}</p>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#" class="btn btn-default btn-sm adicionarCarrinho" name="adicionarCarrinho">
-                                                    <img id="icoCartPlus" name="icoCartPlus" src="assets/icon/cart_plus.png" style="height:18px;">
-                                                    Adicionar no carrinho
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                                    </div>
+                                </div>`;
 
                             rowMobile.html(`<td class="d-flex align-items-center justify-content-center">${productHtml}</td>`);
                             colDesktop.html(productHtml);
@@ -337,14 +337,11 @@
                 var orderId = sessionStorage.getItem('orderId') ? sessionStorage.getItem('orderId') : 0;
 
                 if (!userId) {
-
-                    //Sweetalert2
                     Swal.fire({
                         title: "Você precisa estar logado!",
                         text: "Você precisa estar logado para adicionar produtos ao carrinho!",
                         icon: "error"
                     });
-
                     return;
                 }
 
@@ -362,37 +359,32 @@
                     },
                     body: JSON.stringify(orderData)
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        console.log('Produto adicionado ao carrinho:', data);
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Produto adicionado ao carrinho:', data);
 
-                        // Se o idOrder for maior que zero, busca o pedido e atualiza o countProductOrder
-                        if (data.id > 0) {
-                            // Salva o idOrder no sessionStorage
-                            sessionStorage.setItem('orderId', data.id);
+                    // Se o idOrder for maior que zero, busca o pedido e atualiza o countProductOrder
+                    if (data.id > 0) {
+                        // Salva o idOrder no sessionStorage
+                        sessionStorage.setItem('orderId', data.id);
 
-                            //Sweetalert2
-                            Swal.fire({
-                                title: "Produto adicionado!",
-                                text: "Produto adicionado ao carrinho com sucesso!",
-                                icon: "success"
-                            });
-
-                            fetchOrderById(data.id);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao adicionar produto ao carrinho:', error);
-                        alert('Erro ao adicionar produto ao carrinho.');
-
-                        //Sweetalert2
                         Swal.fire({
-                            title: "Erro ao adicionar!",
-                            text: "Erro ao adicionar produto ao carrinho!",
-                            icon: "error"
+                            title: "Produto adicionado!",
+                            text: "Produto adicionado ao carrinho com sucesso!",
+                            icon: "success"
                         });
+
+                        fetchOrderById(data.id);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao adicionar produto ao carrinho:', error);
+                    Swal.fire({
+                        title: "Erro ao adicionar!",
+                        text: "Erro ao adicionar produto ao carrinho!",
+                        icon: "error"
                     });
+                });
             });
 
             // Adiciona o evento de submit ao formulário de autenticação
@@ -411,69 +403,60 @@
                     },
                     body: JSON.stringify(formData)
                 })
-                    .then(response => {
-                        if (response.status === 401) {
-                            throw new Error('Unauthorized');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Sucesso:', data);
-                        if (data.status) {
+                .then(response => {
+                    if (response.status === 401) {
+                        throw new Error('Unauthorized');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Sucesso:', data);
+                    if (data.status) {
+                        // Salva o username e status no sessionStorage
+                        sessionStorage.setItem('id', data.id);
+                        sessionStorage.setItem('name', data.name);
+                        sessionStorage.setItem('username', data.username);
+                        sessionStorage.setItem('status', data.status);
 
-                            // Salva o username e status no sessionStorage
-                            sessionStorage.setItem('id', data.id);
-                            sessionStorage.setItem('name', data.name);
-                            sessionStorage.setItem('username', data.username);
-                            sessionStorage.setItem('status', data.status);
+                        // Oculta o botão de login
+                        $('#btnLogin').hide();
 
-                            // Oculta o botão de login
-                            $('#btnLogin').hide();
+                        // Exibe a saudação
+                        $('#userName').text(data.name);
+                        $('#userGreeting').show();
 
-                            // Exibe a saudação
-                            $('#userName').text(data.name);
-                            $('#userGreeting').show();
+                        Swal.fire({
+                            title: "Autenticação realizada!",
+                            text: "Autenticação realizada com sucesso!",
+                            icon: "success"
+                        });
 
-                            //Sweetalert2
-                            Swal.fire({
-                                title: "Autenticação realizada!",
-                                text: "Autenticação realizada com sucesso!",
-                                icon: "success"
-                            });
-
-                            // Fechar o modal de autenticação
-                            $('#modalAutenticacao').modal('hide');
-                        } else {
-
-                            //Sweetalert2
-                            Swal.fire({
-                                title: "Erro ao autenticar!",
-                                text: "Erro ao autenticar o usuário!",
-                                icon: "error"
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        if (error.message === 'Unauthorized') {
-                            alert('Usuário ou senha incorretos.');
-
-                            //Sweetalert2
-                            Swal.fire({
-                                title: "Usuário ou senha!",
-                                text: "Usuário ou senha incorretos!",
-                                icon: "error"
-                            });
-                        } else {
-
-                            //Sweetalert2
-                            Swal.fire({
-                                title: "Erro ao autenticar!",
-                                text: "Erro ao autenticar o usuário!",
-                                icon: "error"
-                            });
-                        }
-                    });
+                        // Fechar o modal de autenticação
+                        $('#modalAutenticacao').modal('hide');
+                    } else {
+                        Swal.fire({
+                            title: "Erro ao autenticar!",
+                            text: "Erro ao autenticar o usuário!",
+                            icon: "error"
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    if (error.message === 'Unauthorized') {
+                        Swal.fire({
+                            title: "Usuário ou senha!",
+                            text: "Usuário ou senha incorretos!",
+                            icon: "error"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Erro ao autenticar!",
+                            text: "Erro ao autenticar o usuário!",
+                            icon: "error"
+                        });
+                    }
+                });
             });
         });
     </script>
