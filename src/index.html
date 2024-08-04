@@ -153,6 +153,74 @@
     <script>
         $(document).ready(function () {
 
+             // Captura a localização geográfica e o endereço IP
+             function getAccessData() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(sendAccessData, showError);
+                } else {
+                    console.log("Geolocalização não é suportada por este navegador.");
+                }
+            }
+
+            function sendAccessData(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const userAgent = navigator.userAgent;
+                const internetProtocol = ''; // Precisa ser preenchido com o endereço IP do cliente
+
+                // Obtendo o endereço IP do cliente (usando uma API pública)
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const accessLog = {
+                            latitude: latitude.toString(),
+                            longitude: longitude.toString(),
+                            userAgent: userAgent,
+                            internetProtocol: data.ip,
+                            dateInsert: new Date().toISOString()
+                        };
+
+                        // Envia os dados para a API
+                        fetch('https://localhost:7274/api/AccessLog', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(accessLog)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Dados de acesso enviados com sucesso:', data);
+                        })
+                        .catch(error => {
+                            console.error('Erro ao enviar dados de acesso:', error);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter o endereço IP:', error);
+                    });
+            }
+
+            function showError(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        console.log("Usuário negou a solicitação de Geolocalização.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        console.log("Informação de localização não está disponível.");
+                        break;
+                    case error.TIMEOUT:
+                        console.log("A requisição para obter a localização expirou.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        console.log("Um erro desconhecido ocorreu.");
+                        break;
+                }
+            }
+
+            // Chama a função para capturar e enviar os dados de acesso ao carregar a página
+            getAccessData();
+
             $('#pedido').click(function (event) {
                 event.preventDefault();
                 var orderId = sessionStorage.getItem('orderId');

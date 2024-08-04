@@ -10,7 +10,52 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <!-- Navbar content -->
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="cadastro" name="cadastro" class="nav-link" aria-current="page" href="cadastro.html">Cadastro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="contato" name="contato" class="nav-link" aria-current="page" href="contato.html">Contato</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a id="pedido" name="pedido" class="nav-link" aria-current="page" href="pedido.html">Pedido</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="produto" name="produto" class="nav-link" aria-current="page" href="produto.html">Produto</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="login">
+                        <button id="btnLogin" name="btnLogin" class="btn btn-outline-success" type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalLogin">
+                            olá, faça seu login
+                        </button>
+                        <span id="userGreeting" class="ms-2" style="display: none;">
+                            Olá,
+                            <span id="userName"></span>
+                            <img id="icoVerifiedOk" name="icoVerifiedOk" src="assets/icon/verified_ok.png" style="height:22px;">
+                            <button type="button" class="btn btn-outline-default position-relative">
+                                <img id="icoCartMarket" name="icoCartMarket" class="position-relative"
+                                     src="assets/icon/cart_market.png" style="height:36px;">
+                                <span id="countProductOrder" name="countProductOrder"
+                                      class="position-absolute badge rounded-pill bg-danger">
+                                    0
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                            </button>
+                        </span>
+                    </form>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -47,6 +92,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Verifica o status no localStorage
+            var status = localStorage.getItem('status');
+            var name = localStorage.getItem('name');
+
+            console.log(status);
+
+            if (status === 'true' && name) {
+                // Oculta o botão de login
+                $('#btnLogin').hide();
+
+                // Exibe a saudação
+                $('#userName').text(name);
+                $('#userGreeting').show();
+            }
+
             function fetchOrderProducts(orderId) {
                 console.log(`Buscando produtos do pedido com ID: ${orderId}`);
 
